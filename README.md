@@ -1,0 +1,1 @@
+This is a Node JS Web server that uses Express.Js Post server to take file path and metadata about the file and then uses fs library to read the file and then uses Http to upload the filke to Alfresco server using configuration specified in yaml file.
