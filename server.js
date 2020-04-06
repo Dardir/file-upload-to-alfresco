@@ -14,6 +14,9 @@ app.post('/upload',function(req,res){
   console.dir(metadataObj);
   console.log("filePath = "+filePath);
   var response = fu.uploadFile(filePath,metadataObj);
+  if(response !== 'Ok'){
+    throw new Error(response);
+  }
   res.end(response);
 });
 
