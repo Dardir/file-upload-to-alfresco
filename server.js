@@ -13,8 +13,8 @@ app.post('/upload',function(req,res){
   console.log("metadataObj = ");
   console.dir(metadataObj);
   console.log("filePath = "+filePath);
-  fu.uploadFile(filePath,metadataObj);
-  res.end("yes");
+  var response = fu.uploadFile(filePath,metadataObj);
+  res.end(response);
 });
 
 app.listen(4000,function(){
