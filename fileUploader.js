@@ -2,7 +2,7 @@ exports.uploadFile =  (filePath, metadataObj) => {
   console.log(`Starting to read file in path = ${filePath}`);
   const fs = require('fs');
   try {
-    let fileContent = fs.readFileSync(filePath);
+    const fileContent = fs.readFileSync(filePath);
     if (fileContent.length === 0) {
       console.log("Empty file in path = " + filePath);
       return 'Empty File';
