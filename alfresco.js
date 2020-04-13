@@ -11,7 +11,8 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
 
         //sending post request to Alfresco
          console.log(`File Path to be sent = ${filePath}`);
-         console.log("File stream = "+fs.createReadStream(filePath));
+         console.log("File stream = ");
+         console.dir(fs.createReadStream(filePath));
 
         const form = new FormData();
         form.append('name', fileName);
