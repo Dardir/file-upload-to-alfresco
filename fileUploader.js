@@ -1,4 +1,5 @@
 exports.uploadFile =  (filePath, metadataObj) => {
+  const alfresco = require('./alfresco');
   console.log(`Starting to read file in path = ${filePath}`);
   const fs = require('fs');
   try {
@@ -8,7 +9,7 @@ exports.uploadFile =  (filePath, metadataObj) => {
       return 'Empty File';
     }
     console.log(`read file Successfuly in path = ${filePath} with size = "${fileContent.length}`);
-    return "Ok";
+    return alfresco.uploadFileToFolder(fileContent,metadataObj);
   } catch (err) {
     return err.message;
   }
