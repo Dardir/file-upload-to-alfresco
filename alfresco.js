@@ -10,13 +10,6 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         console.log(config);
 
         //sending post request to Alfresco
-
-        const options = {
-            "headers": {
-                "content-type": "multipart/form-data; boundary=---011000010111000001101001",
-                "authorization": `${config.basicAuthorizationKey}`
-            }
-        };
          
         const form = new FormData();
         form.append('name', fileName);
@@ -36,6 +29,11 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         form.append('dc:POATo', metadataObj.delegatedTo);
         form.append('dc:POAToPass', metadataObj.delegatedToPassport);
         form.append('dc:POAType', metadataObj.delegationType);
+        console.log(form);
+        
+        const options = {...form.getHeaders(),"authorization": `${config.basicAuthorizationKey}`};
+        console.log("Request header = ");
+        console.dir(options);
 
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${config.folderID}/children/`;
         console.log(`calling URL : ${url}`);
