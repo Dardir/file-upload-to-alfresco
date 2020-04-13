@@ -32,8 +32,6 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         console.log(form);
         
         //const options = {...form.getHeaders(), 'Authorization': `${config.basicAuthorizationKey}`};
-        console.log("Request header = ");
-        console.dir(options);
 
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${config.folderID}/children/`;
         console.log(`calling URL : ${url}`);
