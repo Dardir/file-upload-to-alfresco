@@ -10,6 +10,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         console.log(config);
 
         //sending post request to Alfresco
+         console.log(`File Path to be sent = ${filePath}`);
          
         const form = new FormData();
         form.append('name', fileName);
