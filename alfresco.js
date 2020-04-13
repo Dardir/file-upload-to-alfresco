@@ -31,14 +31,16 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         form.append('dc:POAType', metadataObj.delegationType);
         console.log(form);
         
-        const options = {...form.getHeaders(), 'Authorization': `${config.basicAuthorizationKey}`};
+        //const options = {...form.getHeaders(), 'Authorization': `${config.basicAuthorizationKey}`};
         console.log("Request header = ");
         console.dir(options);
 
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${config.folderID}/children/`;
         console.log(`calling URL : ${url}`);
 
-        axios.post(url, form, options)
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey;
+
+        axios.post(url, form, form.getHeaders)
         .then(({ data }) => {
             console.log(data);
             return "Ok";
