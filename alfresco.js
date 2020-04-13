@@ -31,7 +31,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         form.append('dc:POAType', metadataObj.delegationType);
         console.log(form);
         
-        const options = {...form.getHeaders(), Authorization: `${config.basicAuthorizationKey}`};
+        const options = {...form.getHeaders(), 'Authorization': `${config.basicAuthorizationKey}`};
         console.log("Request header = ");
         console.dir(options);
 
