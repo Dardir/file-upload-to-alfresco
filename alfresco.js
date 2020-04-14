@@ -11,13 +11,16 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
 
         //sending post request to Alfresco
          console.log(`File Path to be sent = ${filePath}`);
-         console.log("File stream = ");
-         console.dir(fs.createReadStream(filePath));
+         let stream = fs.createReadStream(filePath).on('data', function (chunk) { 
+            console.log("Receiving data of length ...");
+            console.log(chunk.length);  
+        }); 
+        
 
         const form = new FormData();
         form.append('name', fileName);
         form.append('nodeType', config.alfrescoNodeType);
-        form.append('filedata', fs.createReadStream(filePath));
+        form.append('filedata', stream);
         form.append('dc:Barcode', metadataObj.barcode);
         form.append('dc:EDate', formatDate(metadataObj.delegationDate));
         form.append('dc:Embassy', metadataObj.counsulate);
