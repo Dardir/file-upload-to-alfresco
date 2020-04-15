@@ -7,6 +7,7 @@ exports.uploadFile =  (filePath, metadataObj) => {
       pathArr = filePath.split("\\");
     }
     const fileNameWithUUID = pathArr[pathArr.length-1];
+    console.log(`fileNameWithUUID = ${fileNameWithUUID}`);
     const firstPart = fileNameWithUUID.split("_")[0];
     const extension = fileNameWithUUID.split(".")[1];
     const fileName = firstPart+"."+extension;
