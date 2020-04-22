@@ -16,3 +16,14 @@ exports.uploadFile =  (filePath, metadataObj) => {
     return err.message;
   }
 };
+
+exports.searchFile = async (folderID) => {
+  const alfresco = require('./alfresco');
+  console.log(`Starting to search files in folder = ${folderID}`);
+  try {
+    const response = await alfresco.getAllFilesInFolder(folderID);
+    return response;
+  }catch (err) {
+    return err.message;
+  }
+}

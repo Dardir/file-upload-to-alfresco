@@ -23,7 +23,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
             url: `${url}`,
             headers: {
                 'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
-                'Authorization' : `${config.basicAuthorizationKey}`
+                'Authorization': `${config.basicAuthorizationKey}`
             },
             formData: {
                 name: fileName,
@@ -49,7 +49,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
         console.dir(options);
 
         request(options, function (error, response, body) {
-            if (error){
+            if (error) {
                 return (error.message);
             }
             console.log("Received response = ");
@@ -63,6 +63,34 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
     }
 
 };
+
+exports.getAllFilesInFolder = async (folderID) => {
+    const yaml = require('js-yaml');
+    const fs = require('fs');
+    const axios = require("axios");
+    try {
+        let configFile = fs.readFileSync('./alfresco.yaml', 'utf8');
+        let config = yaml.safeLoad(configFile);
+        console.log("Alfresco Configuration : ")
+        console.log(config);
+
+        //sending get request to Alfresco
+        const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${folderID}/children?include=properties&where=(nodeType%3D'${config.alfrescoNodeTypeForSearch}')`;
+        console.log(`calling URL : ${url}`);
+          
+        const response = await axios.get(url);
+        console.log(response);
+        return response;
+
+
+    } catch (e) {
+        console.log("Catching error : "+e.message);
+        return e.message;
+    }
+
+};
+
+
 
 function formatDate(date) {
     var d = new Date(date),

@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-const fu = require('./fileUploader');
+const as = require('./alfrescoService');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,7 +16,21 @@ app.post('/upload', function (req, res) {
   console.dir(metadataObj);
   console.log(`filePath =  ${filePath}`);
   try {
-    const response = fu.uploadFile(filePath, metadataObj);
+    const response = as.uploadFile(filePath, metadataObj);
+    res.end(response);
+  } catch (error) { // in case of no known errors
+    res.end(error);
+  }
+});
+
+app.get('/search/:folderID', async function (req, res) {
+  const folderID = req.params.folderID;
+  console.log(`folderID =  ${folderID}`);
+  try {
+    const response = await as.searchFile(folderID);
+    console.log("Final Response = ");
+    console.dir(response);
+
     res.end(response);
   } catch (error) { // in case of no known errors
     res.end(error);
