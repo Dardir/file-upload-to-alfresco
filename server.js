@@ -31,7 +31,7 @@ app.get('/search/:folderID', async function (req, res) {
     console.log("Final Response = ");
     console.dir(response);
 
-    res.send(response);
+    res.json(response);
   } catch (error) { // in case of no known errors
     res.end(error);
   }
