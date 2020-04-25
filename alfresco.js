@@ -79,7 +79,10 @@ exports.getAllFilesInFolder = async (folderID) => {
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${folderID}/children?include=properties&where=(nodeType%3D'${config.alfrescoNodeTypeForSearch}')`;
         console.log(`calling URL : ${url}`);
         axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        console.log("Using Headers : ");
+        console.dir(axios.headers);
         const response = await axios.get(url);
+        console.log("Response received from Alfresco is ");
         console.log(response);
         return response;
 
