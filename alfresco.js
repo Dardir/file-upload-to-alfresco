@@ -42,7 +42,8 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
                 'dc:POASubject': metadataObj.delegationSubject,
                 'dc:POATo': metadataObj.delegatedTo,
                 'dc:POAToPass': metadataObj.delegatedToPassport,
-                'dc:POAType': metadataObj.delegationType
+                'dc:POAType': metadataObj.delegationType,
+                'cm:description': metadataObj.barcode+','+formatDate(metadataObj.delegationDate)+','+metadataObj.counsulate+','+metadataObj.employeeName+','+metadataObj.employeeNumber+','+formatDate(metadataObj.transactionDate)+','+metadataObj.delegator+','+metadataObj.delegatorPassport+','+metadataObj.keySearch+','+metadataObj.delegationNumber+','+metadataObj.delegationSubject+','+metadataObj.delegatedTo+','+metadataObj.delegatedToPassport+','+metadataObj.delegationType
             }
         };
         console.log("complete options to be sent = ");
@@ -77,7 +78,7 @@ exports.getAllFilesInFolder = async (folderID) => {
         //sending get request to Alfresco
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${folderID}/children?include=properties&where=(nodeType%3D'${config.alfrescoNodeTypeForSearch}')`;
         console.log(`calling URL : ${url}`);
-          
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
         const response = await axios.get(url);
         console.log(response);
         return response;
