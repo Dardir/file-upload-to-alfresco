@@ -29,9 +29,9 @@ app.get('/search/:folderID', async function (req, res) {
   try {
     const response = await as.searchFile(folderID);
     console.log("Final Response = ");
-    console.dir(response);
+    console.dir(response.data);
 
-    res.json(response);
+    res.json(response.data);
   } catch (error) { // in case of no known errors
     res.end(error);
   }
