@@ -83,7 +83,7 @@ exports.getAllFilesInFolder = async (folderID) => {
         console.dir(axios.headers);
         const response = await axios.get(url);
         console.log("Response received from Alfresco is ");
-        console.log(response);
+        console.dir(response);
         return response;
 
 
