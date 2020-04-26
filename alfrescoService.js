@@ -22,8 +22,17 @@ exports.searchFile = async (folderID) => {
   console.log(`Starting to search files in folder = ${folderID}`);
   try {
     const response = await alfresco.getAllFilesInFolder(folderID);
-    console.log("Passing tyhe following response back ...");
-    console.dir(response);
+    return response;
+  }catch (err) {
+    return err.message;
+  }
+}
+
+exports.fetchFile = async (fileID) => {
+  const alfresco = require('./alfresco');
+  console.log(`Starting to fetch file of ID = ${fileID}`);
+  try {
+    const response = await alfresco.getFileURLWithID(fileID);
     return response;
   }catch (err) {
     return err.message;

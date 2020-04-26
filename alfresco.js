@@ -79,8 +79,6 @@ exports.getAllFilesInFolder = async (folderID) => {
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${folderID}/children?include=properties&where=(nodeType%3D'${config.alfrescoNodeTypeForSearch}')`;
         console.log(`calling URL : ${url}`);
         axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
-        console.log("Using Headers : ");
-        console.dir(axios.headers);
         const response = await axios.get(url);
         console.log("Response received from Alfresco is ");
         console.dir(response);
@@ -94,6 +92,33 @@ exports.getAllFilesInFolder = async (folderID) => {
 
 };
 
+exports.getFileURLWithID = async (fileID) => {
+    const yaml = require('js-yaml');
+    const fs = require('fs');
+    const axios = require("axios");
+    try {
+        let configFile = fs.readFileSync('./alfresco.yaml', 'utf8');
+        let config = yaml.safeLoad(configFile);
+        console.log("Alfresco Configuration : ")
+        console.log(config);
+
+        //sending get request to Alfresco
+        const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${fileID}/content?attachment=false`;
+            
+        console.log(`calling URL : ${url}`);
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        const response = await axios.get(url);
+        console.log("Response received from Alfresco is ");
+        console.dir(response);
+        return response;
+
+
+    } catch (e) {
+        console.log("Catching error : "+e.message);
+        return e.message;
+    }
+
+};
 
 
 function formatDate(date) {

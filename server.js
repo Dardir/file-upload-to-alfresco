@@ -28,10 +28,30 @@ app.get('/search/:folderID', async function (req, res) {
   console.log(`folderID =  ${folderID}`);
   try {
     const response = await as.searchFile(folderID);
-    console.log("Final Response = ");
-    console.dir(response.data);
+    if (response.data) {
+      console.log("Final Response = ");
+      console.dir(response.data);
+      res.json(response.data);
+    }else{
+      res.send(response);
+    }
+  } catch (error) { // in case of no known errors
+    res.end(error);
+  }
+});
 
-    res.json(response.data);
+app.get('/fetchFile/:fileID', async function (req, res) {
+  const fileID = req.params.fileID;
+  console.log(`fileID =  ${fileID}`);
+  try {
+    const response = await as.fetchFile(fileID);
+    if (response.data) {
+      console.log("Final Response = ");
+      console.dir(response.data);
+      res.json(response.data);
+    }else{
+      res.status(500).send(response);
+    }
   } catch (error) { // in case of no known errors
     res.end(error);
   }
