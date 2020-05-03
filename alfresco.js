@@ -103,7 +103,7 @@ exports.getFileURLWithID = async (fileID) => {
         console.log(config);
 
         //sending get request to Alfresco
-        const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${fileID}/content?attachment=false`;
+        const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${fileID}/content?attachment=true`;
             
         console.log(`calling URL : ${url}`);
         axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
