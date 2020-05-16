@@ -38,3 +38,14 @@ exports.fetchFile = async (fileID) => {
     return err.message;
   }
 }
+
+exports.signIn = async (username,password) => {
+  const alfresco = require('./alfresco');
+  console.log(`Starting to signin`);
+  try {
+    const response = await alfresco.signIn(username,password);
+    return response;
+  }catch (err) {
+    return err.message;
+  }
+}

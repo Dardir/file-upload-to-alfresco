@@ -121,6 +121,37 @@ exports.getFileURLWithID = async (fileID) => {
 };
 
 
+exports.signIn = async (username,password) => {
+    const yaml = require('js-yaml');
+    const fs = require('fs');
+    const axios = require("axios");
+    try {
+        let configFile = fs.readFileSync('./alfresco.yaml', 'utf8');
+        let config = yaml.safeLoad(configFile);
+        console.log("Alfresco Configuration : ")
+        console.log(config);
+
+        //sending get request to Alfresco
+        const url = `http://${config.host}:${config.port}${config.loginURL}`;
+            
+        console.log(`calling URL : ${url}`);
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        const response = await axios.post(url, {
+            userId: username,
+            password: password
+          })
+        console.log("Response received from Alfresco is ");
+        console.dir(response);
+        return response;
+
+
+    } catch (e) {
+        console.log("Catching error : "+e.message);
+        return e.message;
+    }
+
+};
+
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),

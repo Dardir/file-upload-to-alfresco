@@ -1,6 +1,7 @@
 host: "localhost"
 port: "8080"
 createDocumentURL: "/alfresco/api/-default-/public/alfresco/versions/1/nodes"
+loginURL: "/alfresco/api/-default-/public/authentication/versions/1/tickets"
 folderID: "3a3ff9f6-30db-44b8-9ec1-99ee67f8fbd7"
 basicAuthorizationKey: "Basic YWRtaW46YWRtaW4="
 alfrescoNodeType: "dc:PowerOfAttorney"

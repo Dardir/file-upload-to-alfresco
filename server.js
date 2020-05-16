@@ -23,6 +23,25 @@ app.post('/upload', function (req, res) {
   }
 });
 
+app.post('/signin', function (req, res) {
+  const userId = req.body.userId;
+  const password = req.body.userId;
+  console.log(`userId = ${userId}`);
+  console.log(`password =  ${password}`);
+  try {
+    const response = as.signIn(userId, password);
+    if (response.data) {
+      console.log("Final Response = ");
+      console.dir(response.data);
+      res.json(response.data);
+    } else {
+      res.send(response);
+    }
+  } catch (error) { // in case of no known errors
+    res.end(error);
+  }
+});
+
 app.get('/search/:folderID', async function (req, res) {
   const folderID = req.params.folderID;
   console.log(`folderID =  ${folderID}`);
@@ -32,7 +51,7 @@ app.get('/search/:folderID', async function (req, res) {
       console.log("Final Response = ");
       console.dir(response.data);
       res.json(response.data);
-    }else{
+    } else {
       res.send(response);
     }
   } catch (error) { // in case of no known errors
@@ -49,7 +68,7 @@ app.get('/fetchFile/:fileID', async function (req, res) {
       console.log("Final Response = ");
       console.dir(response.data);
       res.json(response.data);
-    }else{
+    } else {
       res.status(500).send(response);
     }
   } catch (error) { // in case of no known errors
