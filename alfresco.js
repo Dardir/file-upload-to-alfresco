@@ -43,7 +43,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
                 'dc:POATo': metadataObj.delegatedTo,
                 'dc:POAToPass': metadataObj.delegatedToPassport,
                 'dc:POAType': metadataObj.delegationType,
-                'cm:description': metadataObj.barcode+','+formatDate(metadataObj.delegationDate)+','+metadataObj.counsulate+','+metadataObj.employeeName+','+metadataObj.employeeNumber+','+formatDate(metadataObj.transactionDate)+','+metadataObj.delegator+','+metadataObj.delegatorPassport+','+metadataObj.keySearch+','+metadataObj.delegationNumber+','+metadataObj.delegationSubject+','+metadataObj.delegatedTo+','+metadataObj.delegatedToPassport+','+metadataObj.delegationType
+                'cm:description': metadataObj.barcode + ',' + formatDate(metadataObj.delegationDate) + ',' + metadataObj.counsulate + ',' + metadataObj.employeeName + ',' + metadataObj.employeeNumber + ',' + formatDate(metadataObj.transactionDate) + ',' + metadataObj.delegator + ',' + metadataObj.delegatorPassport + ',' + metadataObj.keySearch + ',' + metadataObj.delegationNumber + ',' + metadataObj.delegationSubject + ',' + metadataObj.delegatedTo + ',' + metadataObj.delegatedToPassport + ',' + metadataObj.delegationType
             }
         };
         console.log("complete options to be sent = ");
@@ -78,7 +78,7 @@ exports.getAllFilesInFolder = async (folderID) => {
         //sending get request to Alfresco
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${folderID}/children?include=properties&where=(nodeType%3D'${config.alfrescoNodeTypeForSearch}')`;
         console.log(`calling URL : ${url}`);
-        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey;
         const response = await axios.get(url);
         console.log("Response received from Alfresco is ");
         console.dir(response);
@@ -86,42 +86,39 @@ exports.getAllFilesInFolder = async (folderID) => {
 
 
     } catch (e) {
-        console.log("Catching error : "+e.message);
+        console.log("Catching error : " + e.message);
         return e.message;
     }
 
 };
 
-exports.getFileURLWithID = async (fileID) => {
+exports.getFileURLWithID = async (fileID) => {  
+
     const yaml = require('js-yaml');
     const fs = require('fs');
-    const axios = require("axios");
-    try {
-        let configFile = fs.readFileSync('./alfresco.yaml', 'utf8');
-        let config = yaml.safeLoad(configFile);
-        console.log("Alfresco Configuration : ")
-        console.log(config);
+    let configFile = fs.readFileSync('./alfresco.yaml', 'utf8');
+    let config = yaml.safeLoad(configFile);
+    console.log("Alfresco Configuration : ");
+    console.log(config);
+    
+    const AlfrescoApi = require('alfresco-js-api-node');
+    const alfrescoJsApi = new AlfrescoApi({hostEcm:`http://${config.host}:${config.port}`});
+    alfrescoJsApi.login('admin', 'admin').then(function (data) {
+        console.log('API called successfully Login ticket:' + data);
+        const contentApi = new ContentApi(alfrescoJsApi);
+        console.log(`Getting URL for file ID = ${fileID}`);
+        return contentApi.getContentUrl(fileID);
+    }, function (error) {
+        console.log("Catching error : " + error.message);
+        return error.message;
+    });
 
-        //sending get request to Alfresco
-        const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${fileID}/content?attachment=true`;
-            
-        console.log(`calling URL : ${url}`);
-        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
-        const response = await axios.get(url);
-        console.log("Response received from Alfresco is ");
-        console.dir(response);
-        return response;
-
-
-    } catch (e) {
-        console.log("Catching error : "+e.message);
-        return e.message;
-    }
+    
 
 };
 
 
-exports.signIn = async (username,password) => {
+exports.signIn = async (username, password) => {
     const yaml = require('js-yaml');
     const fs = require('fs');
     const axios = require("axios");
@@ -133,20 +130,20 @@ exports.signIn = async (username,password) => {
 
         //sending get request to Alfresco
         const url = `http://${config.host}:${config.port}${config.loginURL}`;
-            
+
         console.log(`calling URL : ${url}`);
-        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey;
         const response = await axios.post(url, {
             userId: username,
             password: password
-          })
+        })
         console.log("Response received from Alfresco is ");
         console.dir(response);
         return response;
 
 
     } catch (e) {
-        console.log("Catching error : "+e.message);
+        console.log("Catching error : " + e.message);
         return e.message;
     }
 
