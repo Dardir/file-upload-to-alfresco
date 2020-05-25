@@ -14,7 +14,7 @@
   "author": "Mahmoud Dardir",
   "license": "ISC",
   "dependencies": {
-    "@alfresco/js-api": "^3.8.0",
+    "alfresco-js-api": "^3.0.0-14a975b4461542cd2e108addd613a813313d32e8",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

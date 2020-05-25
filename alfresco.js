@@ -92,7 +92,7 @@ exports.getAllFilesInFolder = async (folderID) => {
 
 };
 
-exports.getFileURLWithID = async (fileID) => {  
+exports.getFileURLWithID = async (fileID) => {
 
     const yaml = require('js-yaml');
     const fs = require('fs');
@@ -100,20 +100,24 @@ exports.getFileURLWithID = async (fileID) => {
     let config = yaml.safeLoad(configFile);
     console.log("Alfresco Configuration : ");
     console.log(config);
-    
-    const AlfrescoApi = require('alfresco-js-api-node');
-    const alfrescoJsApi = new AlfrescoApi({hostEcm:`http://${config.host}:${config.port}`});
-    alfrescoJsApi.login('admin', 'admin').then(function (data) {
-        console.log('API called successfully Login ticket:' + data);
-        const contentApi = new ContentApi(alfrescoJsApi);
-        console.log(`Getting URL for file ID = ${fileID}`);
-        return contentApi.getContentUrl(fileID);
-    }, function (error) {
-        console.log("Catching error : " + error.message);
-        return error.message;
-    });
+    try {
+        const AlfrescoApi = require('alfresco-js-api');
+        const alfrescoJsApi = new AlfrescoApi({ hostEcm: `http://${config.host}:${config.port}` });
+        alfrescoJsApi.login('admin', 'admin').then(function (data) {
+            console.log('API called successfully Login ticket:' + data);
+            const contentApi = new ContentApi(alfrescoJsApi);
+            console.log(`Getting URL for file ID = ${fileID}`);
+            return contentApi.getContentUrl(fileID);
+        }, function (error) {
+            console.log("Catching error : " + error.message);
+            return error.message;
+        });
+    } catch (e) {
+        console.log("Catching error : " + e.message);
+        return e.message;
+    }
 
-    
+
 
 };
 
