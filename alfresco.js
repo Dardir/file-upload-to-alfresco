@@ -33,11 +33,12 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
                 'dc:POADate': formatDate(metadataObj.transactionDate),
                 'dc:POAFrom': metadataObj.delegator,
                 'dc:POAFromPass': metadataObj.delegatorPassport,
+                'dc:POAPhone': metadataObj.delegatorPhone,
                 'dc:POAKeyword': metadataObj.keySearch,
                 'dc:POANumber': metadataObj.delegationNumber,
                 'dc:POASubject': metadataObj.delegationSubject,
                 'dc:POAType': metadataObj.delegationType,
-                'cm:description': metadataObj.counsulate+',' + formatDate(metadataObj.transactionDate)+','+metadataObj.delegator+','+metadataObj.delegatorPassport+','+metadataObj.keySearch+','+metadataObj.delegationNumber+','+metadataObj.delegationSubject+','+metadataObj.delegationType
+                'cm:description': metadataObj.counsulate+',' + formatDate(metadataObj.transactionDate)+','+metadataObj.delegator+','+metadataObj.delegatorPassport+','+metadataObj.delegatorPhone+','+metadataObj.keySearch+','+metadataObj.delegationNumber+','+metadataObj.delegationSubject+','+metadataObj.delegationType
             }
         };
         console.log("complete options to be sent = ");
