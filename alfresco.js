@@ -30,8 +30,6 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
                 nodeType: config.alfrescoNodeType,
                 filedata: stream,
                 'dc:Embassy': metadataObj.counsulate,
-                'dc:EmployeeName': metadataObj.employeeName,
-                'dc:EmployeeNo': metadataObj.employeeNumber,
                 'dc:POADate': formatDate(metadataObj.transactionDate),
                 'dc:POAFrom': metadataObj.delegator,
                 'dc:POAFromPass': metadataObj.delegatorPassport,
@@ -39,7 +37,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
                 'dc:POANumber': metadataObj.delegationNumber,
                 'dc:POASubject': metadataObj.delegationSubject,
                 'dc:POAType': metadataObj.delegationType,
-                'cm:description': metadataObj.counsulate+','+metadataObj.employeeName+','+metadataObj.employeeNumber+','+formatDate(metadataObj.transactionDate)+','+metadataObj.delegator+','+metadataObj.delegatorPassport+','+metadataObj.keySearch+','+metadataObj.delegationNumber+','+metadataObj.delegationSubject+','+metadataObj.delegationType
+                'cm:description': metadataObj.counsulate+',' + formatDate(metadataObj.transactionDate)+','+metadataObj.delegator+','+metadataObj.delegatorPassport+','+metadataObj.keySearch+','+metadataObj.delegationNumber+','+metadataObj.delegationSubject+','+metadataObj.delegationType
             }
         };
         console.log("complete options to be sent = ");
