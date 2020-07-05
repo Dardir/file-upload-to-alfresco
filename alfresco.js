@@ -105,6 +105,7 @@ exports.getFileURLWithID = async (fileID) => {
         const response = await axios.get(url);
         console.log("Response received from Alfresco is ");
         console.dir(response);
+        fs.writeFileSync(response.headers.filename, response.data,'binary');
         return response;
 
 
