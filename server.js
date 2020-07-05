@@ -25,7 +25,7 @@ app.post('/upload', function (req, res) {
 
 app.post('/signin', function (req, res) {
   const userId = req.body.userId;
-  const password = req.body.userId;
+  const password = req.body.password;
   console.log(`userId = ${userId}`);
   console.log(`password =  ${password}`);
   try {
