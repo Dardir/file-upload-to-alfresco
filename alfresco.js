@@ -1,4 +1,4 @@
-exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
+exports.uploadFileToFolder = (fileName, filePath, metadataObj,token) => {
     const yaml = require('js-yaml');
     const fs = require('fs');
     const request = require("request");
@@ -23,7 +23,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
             url: `${url}`,
             headers: {
                 'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
-                'Authorization': `${config.basicAuthorizationKey}`
+                'Authorization': `${token}`
             },
             formData: {
                 name: fileName,
@@ -60,7 +60,7 @@ exports.uploadFileToFolder = (fileName, filePath, metadataObj) => {
 
 };
 
-exports.getAllFilesInFolder = async (folderID) => {
+exports.getAllFilesInFolder = async (folderID,token) => {
     const yaml = require('js-yaml');
     const fs = require('fs');
     const axios = require("axios");
@@ -73,7 +73,7 @@ exports.getAllFilesInFolder = async (folderID) => {
         //sending get request to Alfresco
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${folderID}/children?include=properties&where=(nodeType%3D'${config.alfrescoNodeTypeForSearch}')`;
         console.log(`calling URL : ${url}`);
-        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        axios.defaults.headers.common['Authorization'] = token; 
         const response = await axios.get(url);
         console.log("Response received from Alfresco is ");
         console.dir(response);
@@ -87,7 +87,7 @@ exports.getAllFilesInFolder = async (folderID) => {
 
 };
 
-exports.getFileURLWithID = async (fileID) => {
+exports.getFileURLWithID = async (fileID,token) => {
     const yaml = require('js-yaml');
     const fs = require('fs');
     const axios = require("axios");
@@ -101,7 +101,7 @@ exports.getFileURLWithID = async (fileID) => {
         const url = `http://${config.host}:${config.port}${config.createDocumentURL}/${fileID}/content?attachment=true`;
             
         console.log(`calling URL : ${url}`);
-        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        axios.defaults.headers.common['Authorization'] = token; 
         const response = await axios.get(url);
         console.log("Response received from Alfresco is ");
         console.dir(response);
@@ -129,9 +129,8 @@ exports.signIn = async (username,password) => {
 
         //sending get request to Alfresco
         const url = `http://${config.host}:${config.port}${config.loginURL}`;
-            
         console.log(`calling URL : ${url}`);
-        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey; 
+        axios.defaults.headers.common['Authorization'] = config.basicAuthorizationKey;  
         const response = await axios.post(url, {
             userId: username,
             password: password
