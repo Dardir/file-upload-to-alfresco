@@ -30,7 +30,7 @@ app.post('/signin', function (req, res) {
   console.log(`userId = ${userId}`);
   console.log(`password =  ${password}`);
   try {
-    const response = as.signIn(userId, password);
+    const response = await as.signIn(userId, password);
     if (response.data) {
       console.log("Final Response = ");
       console.dir(response.data);
