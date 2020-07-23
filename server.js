@@ -24,7 +24,7 @@ app.post('/upload', function (req, res) {
   }
 });
 
-app.post('/signin', function (req, res) {
+app.post('/signin', async function (req, res) {
   const userId = req.body.userId;
   const password = req.body.password;
   console.log(`userId = ${userId}`);
