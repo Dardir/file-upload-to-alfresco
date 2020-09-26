@@ -8,6 +8,8 @@ exports.uploadFile =  (filePath, metadataObj,token) => {
     }
     const fileNameWithUUID = pathArr[pathArr.length-1];
     const firstPart = fileNameWithUUID.split("_")[0];
+    const transactionNumber = fileNameWithUUID.split("_")[1];
+    firstPart+=`_${transactionNumber}`;
     const extension = fileNameWithUUID.split(".")[1];
     const fileName = firstPart+"."+extension;
     console.log(`file name to be sent is ${fileName}`);
